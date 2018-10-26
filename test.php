@@ -1,13 +1,13 @@
 <?php
 
-$file = $_POST['test'];
-$json = file_get_contents(__DIR__ . '/' . $file);
-$data = json_decode($json, true);
-
-if ($data[0]['number'] == false) {
+if (isset($_POST['test']) == false) {
     echo "Ошибка 404!!! Загрузите сначала соответствующие тесты!!!!";
     exit;
 }
+
+$file = $_POST['test'];
+$json = file_get_contents(__DIR__ . '/' . $file);
+$data = json_decode($json, true);
 
 ?>
 
@@ -21,6 +21,9 @@ if ($data[0]['number'] == false) {
     <title>TEST</title>
 </head>
 <body>
+    <nav>
+        <a href="list.php">LIST</a>
+    </nav>
 
     <h2>Дайте ответы на вопроссы</h2>
     <form action="test.php" method="post">
@@ -31,7 +34,7 @@ if ($data[0]['number'] == false) {
         </label>
 
         <?php for ($i = 0; $i < count($data); $i++): ?>
-            <p><?php echo $data[$i]['number'] . ") " . $data[$i]['question'] ?></p>
+            <p><?php echo $data[$i]['number'] . ') ' . $data[$i]['question'] ?></p>
 
             <?php foreach ($data[$i]['variants'] as $k => $v) : ?>
                 <input type="radio" name="<?php echo $data[$i]['number'] ?>" value="<?php echo $v ?>">
@@ -48,23 +51,23 @@ if ($data[0]['number'] == false) {
             $v = 1;
             $mark = 0;
 
-            echo "<br>";
+            echo '<h2>';
             echo $_POST['FirstName'];
-            echo "<br><br>";
+            echo '</h2><p>';
             for ($i = 0; $i < count($data); $i++) {
                 $num_answer = $data[$i]['number'];
                 $answer = $data[$i]['answer'];
                 if (isset($_POST[$v]) == null) {
-                    echo "$num_answer" . ") " . "ОТВЕТ НЕ ВЫБРАН!!!!" . "<br>";
+                    echo "$num_answer) ОТВЕТ НЕ ВЫБРАН!!!!<br>";
                 } else if ($_POST[$v] == $answer) {
-                    echo "$num_answer" . ") " . "Правильно, ответ = " . "$answer" . "<br>";
+                    echo "$num_answer) Правильно, ответ = $answer <br>";
                     $mark++;
                 } else {
-                    echo "$num_answer" . ") " . "Не правильно!" . "<br>";
+                    echo "$num_answer) Не правильно!<br>";
                 }
                 $v++;
             }
-            echo "<br>" . "Оценка: " . $mark. "<br>";
+            echo "</p><p>Оценка: $mark</p>";
             $conclusion = strval($_POST['FirstName'] . "! Your mark is: " . $mark);
         };
     ?>

@@ -12,15 +12,19 @@ $file_list = glob('test/*.json');
     <title>List</title>
 </head>
 <body>
-<form method="post" action="test.php">
-    <h3>Выберите теста для прохождения:</h3>
-    <?php
-    $c = 1;
-    foreach ($file_list as $key => $file) : ?>
-        <label><input type="radio" name="test" value="<?php echo $file; ?>" required>Test <?php echo $c ?></label><br>
-        <?php $c++; ?>
-    <?php endforeach; ?>
-    <input type="submit" value="Пройти тест">
-</form>
+    <nav>
+        <a href="admin.php">ADMIN</a>
+    </nav>
+
+    <form method="post" action="test.php">
+        <h3>Выберите теста для прохождения:</h3>
+        <?php
+        $c = 1;
+        foreach ($file_list as $key => $file) : ?>
+            <label><input type="radio" name="test" value="<?php echo $file; ?>" required>Test <?php echo $c ?></label><br>
+            <?php $c++; ?>
+        <?php endforeach; ?>
+        <input type="submit" value="Пройти тест">
+    </form>
 </body>
 </html>
